@@ -46,7 +46,7 @@ _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_URL, default="http://127.0.0.1:8888"): cv.string,
+        vol.Required(CONF_URL, default="http://127.0.0.1:8888"): str,
     }
 )
 
