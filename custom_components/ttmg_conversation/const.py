@@ -4,7 +4,7 @@ import logging
 
 DOMAIN = "ttmg_llm"
 LOGGER = logging.getLogger(__package__)
-
+CONF_URL = "host"
 CONF_RECOMMENDED = "recommended"
 CONF_PROMPT = "prompt"
 CONF_CHAT_MODEL = "chat_model"
