@@ -46,7 +46,7 @@ _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_URL, default="http://127.0.0.1:8888"): str,
+        vol.Required(CONF_URL, default="http://127.0.0.1:8888"): cv.string,
     }
 )
 
@@ -84,10 +84,6 @@ class OpenAIConfigFlow(ConfigFlow, domain=DOMAIN):
 
         try:
             await validate_input(self.hass, user_input)
-        except openai.APIConnectionError:
-            errors["base"] = "cannot_connect"
-        except openai.AuthenticationError:
-            errors["base"] = "invalid_auth"
         except Exception:
             _LOGGER.exception("Unexpected exception")
             errors["base"] = "unknown"

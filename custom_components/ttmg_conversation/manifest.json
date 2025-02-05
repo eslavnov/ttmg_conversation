@@ -1,6 +1,6 @@
 {
   "domain": "ttmg_llm",
-  "name": "Talt To Me Goose Conversation",
+  "name": "Talk To Me Goose Conversation",
   "after_dependencies": ["assist_pipeline", "intent"],
   "codeowners": ["@eslavnov"],
   "config_flow": true,
