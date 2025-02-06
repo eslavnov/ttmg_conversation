@@ -99,6 +99,7 @@ class OpenAIConversationEntity(
                 conversation.ConversationEntityFeature.CONTROL
             )
         self.url = entry.data[CONF_URL]
+        LOGGER.warning(self.url)
         
     @property
     def supported_languages(self) -> list[str] | Literal["*"]:
@@ -248,16 +249,18 @@ class OpenAIConversationEntity(
         # Run the ChatGPT response and tool calls in the background
         async def handle_chatgpt_response():
           async with aiohttp.ClientSession() as session:
-            LOGGER.warning("Tools: %s", json.dumps(tools))
-            LOGGER.warning("Messages: %s", json.dumps(messages))
-            async with session.post(f"{self.url}/preload/{user_input.device_id}", json={"messages": json.dumps(messages), "tools":json.dumps(tools) }) as resp:
+            max_completion_tokens = options.get(CONF_MAX_TOKENS, RECOMMENDED_MAX_TOKENS)
+            top_p = options.get(CONF_TOP_P, RECOMMENDED_TOP_P)
+            temperature = options.get(CONF_TEMPERATURE, RECOMMENDED_TEMPERATURE)
+            model = options.get(CONF_CHAT_MODEL, RECOMMENDED_CHAT_MODEL)
+            async with session.post(f"{self.url}/preload/{user_input.device_id}", json={"messages": json.dumps(messages), "tools":json.dumps(tools), "max_completion_tokens":max_completion_tokens, "top_p":top_p, "temperature":temperature, "model": model  }) as resp:
                 if resp.status != 200:
                     # Handle error
                     pass
                 response_body = await resp.json()
                 new_messages = response_body.get('messages', None)
                 if new_messages:
-                  # LOGGER.warning("WRITING NEW HISTORY: %s", new_messages)
+                  LOGGER.debug("WRITING NEW HISTORY: %s", new_messages)
                   self.history[conversation_id] = new_messages
 
                 tool_calls = response_body.get('tool_calls', None)
@@ -268,7 +271,7 @@ class OpenAIConversationEntity(
                             # Handle error
                             pass
                         response_body = await resp.json()
-                        # LOGGER.warning("GOT HISTORY %s", response_body["messages"])
+                        LOGGER.debug("GOT HISTORY %s", response_body["messages"])
                         new_messages = response_body["messages"]
 
                         
@@ -288,7 +291,7 @@ class OpenAIConversationEntity(
                             if str(e):
                                 tool_response["error_text"] = str(e)
 
-                        LOGGER.warning("Tool response: %s", tool_response)
+                        LOGGER.debug("Tool response: %s", tool_response)
 
                         new_messages.append(
                             ChatCompletionToolMessageParam(
@@ -302,11 +305,6 @@ class OpenAIConversationEntity(
                           # Handle error
                           pass
                     self.history[conversation_id] = new_messages
-                    # LOGGER.warning("THIS IS THE NEW HISTORY: %s", new_messages)
-            # intent_response = intent.IntentResponse(language=user_input.language)
-            # intent_response.async_set_speech(response.content or "")
-            # Optionally, update the conversation result with the final response
-            # default_conversation_result.response = intent_response
 
         # Schedule the background task
         asyncio.create_task(handle_chatgpt_response())

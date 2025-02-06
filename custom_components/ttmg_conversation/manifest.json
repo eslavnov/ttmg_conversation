@@ -1,5 +1,5 @@
 {
-  "domain": "ttmg_llm",
+  "domain": "ttmg_conversation",
   "name": "Talk To Me Goose Conversation",
   "after_dependencies": ["assist_pipeline", "intent"],
   "codeowners": ["@eslavnov"],

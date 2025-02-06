@@ -2,7 +2,7 @@
 
 import logging
 
-DOMAIN = "ttmg_llm"
+DOMAIN = "ttmg_conversation"
 LOGGER = logging.getLogger(__package__)
 CONF_URL = "host"
 CONF_RECOMMENDED = "recommended"
