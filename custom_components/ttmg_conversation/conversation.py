@@ -99,7 +99,6 @@ class OpenAIConversationEntity(
                 conversation.ConversationEntityFeature.CONTROL
             )
         self.url = entry.data[CONF_URL]
-        LOGGER.warning(self.url)
         
     @property
     def supported_languages(self) -> list[str] | Literal["*"]:
@@ -139,7 +138,6 @@ class OpenAIConversationEntity(
             assistant=conversation.DOMAIN,
             device_id=user_input.device_id,
         )
-        LOGGER.warning("DEVICE ID: %s", user_input.device_id)
 
         if options.get(CONF_LLM_HASS_API):
             try:
