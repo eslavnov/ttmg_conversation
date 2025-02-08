@@ -1,4 +1,4 @@
-# Talk To Me Goose 
+# Talk To Me Goose (HASS Integration - Conversation)
 ![Logo](assets/logo.jpg)
 
 This is a custom integration for Home Assistant to work with [Talk To Me Goose Server](https://github.com/eslavnov/ttmg_server).
