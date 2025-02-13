@@ -1,13 +1,13 @@
 {
-  "domain": "ttmg_conversation",
-  "name": "Talk To Me Goose Conversation",
+  "domain": "ttmg",
+  "name": "Talk To Me Goose",
   "after_dependencies": ["assist_pipeline", "intent"],
   "codeowners": ["@eslavnov"],
   "config_flow": true,
-  "dependencies": ["conversation"],
+  "dependencies": ["conversation", "tts"],
   "documentation": "https://github.com/eslavnov/ttmg_conversation",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "requirements": ["openai==1.35.7"],
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
