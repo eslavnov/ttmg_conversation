@@ -78,7 +78,7 @@ class TTMGTTSEntity(TextToSpeechEntity):
     ) -> TtsAudioType:
         """Load TTMG TTS"""
         if message != "Processing your request, please wait...":
-          requests.post("http://192.168.201.10:8888/preload-text/ttmg_tts/", json={"text": message }) 
+          requests.post(self._url, json={"text": message }) 
         return None, None
 
 class TTMGProvider(Provider):
@@ -95,5 +95,5 @@ class TTMGProvider(Provider):
     ) -> TtsAudioType:
         """Load TTMG TTS"""
         if message != "Processing your request, please wait...":
-          requests.post("http://192.168.201.10:8888/preload-text/ttmg_tts/", json={"text": message }) 
+          requests.post(self._url, json={"text": message }) 
         return None, None
