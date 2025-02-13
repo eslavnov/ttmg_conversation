@@ -1,13 +1,10 @@
 """Support for the TTMG TTS service."""
-
 from __future__ import annotations
-
 import logging
 from typing import Any
-
 import voluptuous as vol
-
 import requests
+
 from homeassistant.components.tts import (
     CONF_LANG,
     PLATFORM_SCHEMA as TTS_PLATFORM_SCHEMA,
